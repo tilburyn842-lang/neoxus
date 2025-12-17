@@ -47,7 +47,7 @@
             font-size: 28px;
             letter-spacing: 12px;
             margin-bottom: 40px;
-            animation: loaderGlow 1s infinite;
+            animation: loaderGlow 1s infinite, textFloat 3s ease-in-out infinite;
         }
 
         @keyframes loaderGlow {
@@ -61,6 +61,11 @@
             }
         }
 
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
         .progress-bar {
             width: 500px;
             height: 6px;
@@ -68,6 +73,7 @@
             position: relative;
             overflow: hidden;
             border: 1px solid #333;
+            border-radius: 3px;
         }
 
         .progress-fill {
@@ -76,12 +82,38 @@
             width: 0%;
             transition: width 0.3s ease;
             box-shadow: 0 0 20px #ff0000;
-            animation: progressPulse 1s infinite;
+            animation: progressPulse 1s infinite, progressScan 2s linear infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.4) 50%, 
+                transparent 100%);
+            animation: shimmer 2s infinite;
         }
 
         @keyframes progressPulse {
             0%, 100% { box-shadow: 0 0 20px #ff0000; }
             50% { box-shadow: 0 0 30px #ff0000, 0 0 50px #ff0000; }
+        }
+
+        @keyframes progressScan {
+            0% { background-position: -500px 0; }
+            100% { background-position: 500px 0; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .main-content {
@@ -114,9 +146,27 @@
             animation: twinkle 3s infinite;
         }
 
+        .star:nth-child(3n) {
+            background: #ff0000;
+            width: 3px;
+            height: 3px;
+        }
+
+        .star:nth-child(5n) {
+            background: #ffffff;
+            width: 1px;
+            height: 1px;
+        }
+
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; transform: scale(1.5); }
+            0%, 100% { 
+                opacity: 0.2; 
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.5); 
+            }
         }
 
         .scanlines {
@@ -157,17 +207,20 @@
             z-index: 10;
             position: relative;
             padding: 80px 100px;
+            animation: containerFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(0.5deg); }
+            50% { transform: translateY(0px) rotate(-0.5deg); }
+            75% { transform: translateY(15px) rotate(0.5deg); }
         }
 
         .title-wrapper {
             position: relative;
             margin-bottom: 80px;
-            animation: titleFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes titleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            perspective: 1000px;
         }
 
         h1 {
@@ -183,9 +236,15 @@
                 0 0 80px #ff0000,
                 0 0 100px #ff0000,
                 0 0 150px #ff0000;
-            animation: flicker 2s infinite alternate, glitchText 4s infinite, pulse 2s infinite;
+            animation: flicker 2s infinite alternate, glitchText 4s infinite, pulse 2s infinite, titleFloat 8s ease-in-out infinite;
             position: relative;
             font-weight: 900;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-20px) rotateX(5deg); }
         }
 
         @keyframes pulse {
@@ -228,6 +287,7 @@
             width: 100%;
             height: 100%;
             opacity: 0;
+            pointer-events: none;
         }
 
         .glitch:nth-child(2) {
@@ -263,22 +323,19 @@
             gap: 50px;
             justify-content: center;
             flex-wrap: wrap;
-            animation: buttonsFadeIn 1s ease-out 0.5s backwards;
-        }
-
-        @keyframes buttonsFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .btn-wrapper {
             position: relative;
+            animation: btnFloat 4s ease-in-out infinite;
+        }
+
+        .btn-wrapper:nth-child(1) { animation-delay: 0s; }
+        .btn-wrapper:nth-child(2) { animation-delay: 0.5s; }
+
+        @keyframes btnFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .btn {
@@ -298,16 +355,6 @@
             overflow: hidden;
             display: block;
             font-family: 'Courier New', monospace;
-            animation: btnBreathe 3s ease-in-out infinite;
-        }
-
-        @keyframes btnBreathe {
-            0%, 100% { 
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-            }
-            50% { 
-                box-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 40px rgba(255, 0, 0, 0.2);
-            }
         }
 
         .btn::before {
@@ -317,13 +364,15 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: btnShine 3s infinite;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            transition: left 0.5s ease;
         }
 
-        @keyframes btnShine {
-            0% { left: -100%; }
-            50%, 100% { left: 100%; }
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:hover {
@@ -335,12 +384,20 @@
                 0 0 90px #fff,
                 0 0 120px rgba(255, 0, 0, 0.9),
                 inset 0 0 30px rgba(255, 255, 255, 0.3);
-            transform: scale(1.08);
-            letter-spacing: 8px;
+            transform: scale(1.08) rotate(1deg);
+            animation: btnShake 0.3s ease;
+        }
+
+        @keyframes btnShake {
+            0%, 100% { transform: scale(1.08) rotate(1deg); }
+            25% { transform: scale(1.08) rotate(-1deg); }
+            50% { transform: scale(1.08) rotate(2deg); }
+            75% { transform: scale(1.08) rotate(-1deg); }
         }
 
         .btn:active {
-            transform: scale(0.95);
+            transform: scale(0.95) rotate(0deg);
+            transition: transform 0.1s ease;
         }
 
         .btn-glow {
@@ -354,11 +411,11 @@
             filter: blur(15px);
             transition: opacity 0.4s ease;
             z-index: -2;
+            animation: glowPulse 0.5s infinite;
         }
 
         .btn-wrapper:hover .btn-glow {
             opacity: 1;
-            animation: glowPulse 0.5s infinite;
         }
 
         @keyframes glowPulse {
@@ -446,6 +503,7 @@
                 width: 100%;
                 padding: 20px 40px;
                 font-size: 16px;
+                letter-spacing: 4px;
             }
 
             .progress-bar {
@@ -454,6 +512,7 @@
 
             .loader-text {
                 font-size: 20px;
+                letter-spacing: 8px;
             }
         }
 
@@ -484,6 +543,56 @@
             80% { transform: translate(3px, 3px) rotate(-0.5deg); }
             90% { transform: translate(-2px, 2px) rotate(0.3deg); }
         }
+
+        .cyber-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .energy-rings {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .energy-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: energyPulse 4s ease-out infinite;
+        }
+
+        @keyframes energyPulse {
+            0% { 
+                width: 0; 
+                height: 0; 
+                opacity: 1; 
+                border-width: 2px;
+            }
+            100% { 
+                width: 500px; 
+                height: 500px; 
+                opacity: 0; 
+                border-width: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -499,6 +608,8 @@
         <div class="scanlines"></div>
         <div class="vignette"></div>
         <div class="static-noise"></div>
+        <div class="cyber-grid"></div>
+        <div class="energy-rings"></div>
         <div class="particles" id="particles"></div>
         
         <div class="container">
@@ -510,7 +621,11 @@
             <div class="buttons">
                 <div class="btn-wrapper">
                     <div class="btn-glow"></div>
-                    <a href="https://logged.tg/auth/aroxa" class="btn">SITE</a>
+                    <a href="https://logged.tg/auth/aroxa" class="btn">Main</a>
+                </div>
+                <div class="btn-wrapper">
+                    <div class="btn-glow"></div>
+                    <a href="#" class="btn">Site</a>
                 </div>
             </div>
         </div>
@@ -573,6 +688,15 @@
             particlesContainer.appendChild(logoParticle);
         }
 
+        // Create energy rings
+        const energyRings = document.querySelector('.energy-rings');
+        for (let i = 0; i < 3; i++) {
+            const ring = document.createElement('div');
+            ring.className = 'energy-ring';
+            ring.style.animationDelay = (i * 1.3) + 's';
+            energyRings.appendChild(ring);
+        }
+
         // Click sound
         const clickSound = new Audio('https://www.myinstants.com/media/sounds/soft-minimal-click-3.mp3');
 
@@ -584,12 +708,80 @@
                 setTimeout(() => {
                     document.body.style.animation = '';
                 }, 150);
+                
+                // Add ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'fixed';
+                ripple.style.width = '100px';
+                ripple.style.height = '100px';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'radial-gradient(circle, rgba(255,0,0,0.3) 0%, transparent 70%)';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.zIndex = '100';
+                document.body.appendChild(ripple);
+                
+                const rect = btn.getBoundingClientRect();
+                ripple.style.left = (rect.left + rect.width/2 - 50) + 'px';
+                ripple.style.top = (rect.top + rect.height/2 - 50) + 'px';
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
             });
             
             btn.addEventListener('click', () => {
                 clickSound.currentTime = 0;
                 clickSound.play();
             });
+        });
+
+        // Add keyboard interaction
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                const currentBtn = document.activeElement;
+                const buttons = document.querySelectorAll('.btn');
+                const currentIndex = Array.from(buttons).indexOf(currentBtn);
+                
+                if (currentIndex !== -1) {
+                    let nextIndex;
+                    if (e.key === 'ArrowRight') {
+                        nextIndex = (currentIndex + 1) % buttons.length;
+                    } else {
+                        nextIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+                    }
+                    
+                    buttons[nextIndex].focus();
+                }
+            }
+        });
+
+        // Mouse trail effect
+        const trail = [];
+        const trailLength = 20;
+        
+        document.addEventListener('mousemove', (e) => {
+            const trailDot = document.createElement('div');
+            trailDot.style.position = 'fixed';
+            trailDot.style.width = '6px';
+            trailDot.style.height = '6px';
+            trailDot.style.borderRadius = '50%';
+            trailDot.style.background = 'radial-gradient(circle, #ff0000, transparent)';
+            trailDot.style.pointerEvents = 'none';
+            trailDot.style.zIndex = '1000';
+            trailDot.style.left = e.pageX - 3 + 'px';
+            trailDot.style.top = e.pageY - 3 + 'px';
+            
+            document.body.appendChild(trailDot);
+            trail.push(trailDot);
+            
+            if (trail.length > trailLength) {
+                const oldDot = trail.shift();
+                setTimeout(() => {
+                    if (oldDot && oldDot.parentNode) {
+                        oldDot.parentNode.removeChild(oldDot);
+                    }
+                }, 300);
+            }
         });
     </script>
 </body>
