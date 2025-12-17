@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝙉𝙀𝙊𝙓𝙐𝙎</title>
+    <title>𝘼𝙍𝙊𝙓𝘼</title>
     <style>
         * {
             margin: 0;
@@ -339,11 +339,47 @@
             box-shadow: 0 0 10px #ff0000;
         }
 
+        .logo-particle {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-image: url('https://i.postimg.cc/13JmX3Xy/828e68fb3ee12496787a3120a44d64c9.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            animation: floatLogo 20s infinite;
+            opacity: 0;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+            filter: brightness(1.2);
+        }
+
         @keyframes float {
             0% { transform: translateY(100vh) translateX(0) rotate(0deg) scale(0); opacity: 0; }
             5% { opacity: 0.4; transform: translateY(95vh) translateX(10px) rotate(36deg) scale(1); }
             90% { opacity: 0.4; }
             100% { transform: translateY(-10vh) translateX(100px) rotate(360deg) scale(0); opacity: 0; }
+        }
+
+        @keyframes floatLogo {
+            0% { 
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0); 
+                opacity: 0; 
+            }
+            5% { 
+                opacity: 0.7; 
+                transform: translateY(95vh) translateX(10px) rotate(36deg) scale(1); 
+            }
+            50% { 
+                opacity: 0.8; 
+                filter: brightness(1.5);
+            }
+            90% { 
+                opacity: 0.7; 
+            }
+            100% { 
+                transform: translateY(-10vh) translateX(120px) rotate(720deg) scale(0); 
+                opacity: 0; 
+            }
         }
 
         @media (max-width: 768px) {
@@ -391,8 +427,17 @@
             100% { transform: translate(-5%, -5%); }
         }
 
-        .chromatic-flash {
-            display: none;
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-3px, 3px) rotate(0.5deg); }
+            20% { transform: translate(3px, -3px) rotate(-0.5deg); }
+            30% { transform: translate(-3px, -3px) rotate(0.5deg); }
+            40% { transform: translate(3px, 3px) rotate(-0.5deg); }
+            50% { transform: translate(-3px, 3px) rotate(0.5deg); }
+            60% { transform: translate(3px, -3px) rotate(-0.5deg); }
+            70% { transform: translate(-3px, -3px) rotate(0.5deg); }
+            80% { transform: translate(3px, 3px) rotate(-0.5deg); }
+            90% { transform: translate(-2px, 2px) rotate(0.3deg); }
         }
     </style>
 </head>
@@ -413,18 +458,14 @@
         
         <div class="container">
             <div class="title-wrapper">
-                <h1>𝙉𝙀𝙊𝙓𝙐𝙎</h1>
-                <div class="glitch">𝙉𝙀𝙊𝙓𝙐𝙎</div>
-                <div class="glitch">𝙉𝙀𝙊𝙓𝙐𝙎</div>
+                <h1>𝘼𝙍𝙊𝙓𝘼</h1>
+                <div class="glitch">𝘼𝙍𝙊𝙓𝘼</div>
+                <div class="glitch">𝘼𝙍𝙊𝙓𝘼</div>
             </div>
             <div class="buttons">
                 <div class="btn-wrapper">
                     <div class="btn-glow"></div>
-                    <a href="https://www.logged.tg/auth/neoxus" class="btn">Logged</a>
-                </div>
-                <div class="btn-wrapper">
-                    <div class="btn-glow"></div>
-                    <a href="https://immortal.rs/?code=MTk0NDA2NTEwNTQzOTMyNTIwMA==" class="btn">Immortal</a>
+                    <a href="https://logged.tg/auth/aroxa" class="btn">Main</a>
                 </div>
             </div>
         </div>
@@ -475,10 +516,20 @@
             particlesContainer.appendChild(particle);
         }
 
+        // Generate logo particles
+        for (let i = 0; i < 15; i++) {
+            const logoParticle = document.createElement('div');
+            logoParticle.className = 'logo-particle';
+            logoParticle.style.left = Math.random() * 100 + '%';
+            logoParticle.style.animationDelay = Math.random() * 20 + 's';
+            logoParticle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            logoParticle.style.width = (25 + Math.random() * 25) + 'px';
+            logoParticle.style.height = logoParticle.style.width;
+            particlesContainer.appendChild(logoParticle);
+        }
+
         // Click sound
         const clickSound = new Audio('https://www.myinstants.com/media/sounds/soft-minimal-click-3.mp3');
-
-        // Chromatic aberration flash removed
 
         // Enhanced screen shake on button hover
         const buttons = document.querySelectorAll('.btn');
@@ -496,20 +547,5 @@
             });
         });
     </script>
-    
-    <style>
-        @keyframes shake {
-            0%, 100% { transform: translate(0, 0); }
-            10% { transform: translate(-3px, 3px) rotate(0.5deg); }
-            20% { transform: translate(3px, -3px) rotate(-0.5deg); }
-            30% { transform: translate(-3px, -3px) rotate(0.5deg); }
-            40% { transform: translate(3px, 3px) rotate(-0.5deg); }
-            50% { transform: translate(-3px, 3px) rotate(0.5deg); }
-            60% { transform: translate(3px, -3px) rotate(-0.5deg); }
-            70% { transform: translate(-3px, -3px) rotate(0.5deg); }
-            80% { transform: translate(3px, 3px) rotate(-0.5deg); }
-            90% { transform: translate(-2px, 2px) rotate(0.3deg); }
-        }
-    </style>
 </body>
 </html>
