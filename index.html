@@ -621,11 +621,11 @@
             <div class="buttons">
                 <div class="btn-wrapper">
                     <div class="btn-glow"></div>
-                    <a href="https://logged.tg/auth/aroxa" class="btn">Main</a>
+                    <a href="https://logged.tg/auth/aroxa" class="btn">Say</a>
                 </div>
                 <div class="btn-wrapper">
                     <div class="btn-glow"></div>
-                    <a href="#" class="btn">Site</a>
+                    <a href="https://discord.gg/DHga8Z8Rsr" class="btn">Discord</a>
                 </div>
             </div>
         </div>
@@ -755,34 +755,7 @@
             }
         });
 
-        // Mouse trail effect
-        const trail = [];
-        const trailLength = 20;
-        
-        document.addEventListener('mousemove', (e) => {
-            const trailDot = document.createElement('div');
-            trailDot.style.position = 'fixed';
-            trailDot.style.width = '6px';
-            trailDot.style.height = '6px';
-            trailDot.style.borderRadius = '50%';
-            trailDot.style.background = 'radial-gradient(circle, #ff0000, transparent)';
-            trailDot.style.pointerEvents = 'none';
-            trailDot.style.zIndex = '1000';
-            trailDot.style.left = e.pageX - 3 + 'px';
-            trailDot.style.top = e.pageY - 3 + 'px';
-            
-            document.body.appendChild(trailDot);
-            trail.push(trailDot);
-            
-            if (trail.length > trailLength) {
-                const oldDot = trail.shift();
-                setTimeout(() => {
-                    if (oldDot && oldDot.parentNode) {
-                        oldDot.parentNode.removeChild(oldDot);
-                    }
-                }, 300);
-            }
-        });
+        // Removed cursor trail effect as requested
     </script>
 </body>
 </html>
