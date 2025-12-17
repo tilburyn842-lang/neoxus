@@ -114,6 +114,32 @@
             animation: twinkle 3s infinite;
         }
 
+        .shooting-star {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            animation: shoot 3s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes shoot {
+            0% { 
+                opacity: 0; 
+                transform: translateX(-100px) translateY(0); 
+            }
+            10% { 
+                opacity: 1; 
+            }
+            90% { 
+                opacity: 1; 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateX(1000px) translateY(500px); 
+            }
+        }
+
         @keyframes twinkle {
             0%, 100% { opacity: 0.2; }
             50% { opacity: 1; transform: scale(1.5); }
@@ -169,17 +195,26 @@
             color: #ffffff;
             letter-spacing: 24px;
             text-shadow: 
-                0 0 10px #fff,
-                0 0 20px #fff,
+                0 0 15px #fff,
                 0 0 30px #fff,
-                0 0 40px #ff0000,
-                0 0 70px #ff0000,
-                0 0 80px #ff0000,
-                0 0 100px #ff0000,
-                0 0 150px #ff0000;
-            animation: flicker 2s infinite alternate, glitchText 4s infinite, pulse 2s infinite;
+                0 0 45px #fff,
+                0 0 60px #ff0000,
+                0 0 90px #ff0000,
+                0 0 120px #ff0000,
+                0 0 150px #ff0000,
+                0 0 200px #ff0000;
+            animation: flicker 1.5s infinite alternate, glitchText 3s infinite, pulse 1.8s infinite, colorShift 6s infinite;
             position: relative;
             font-weight: 900;
+        }
+
+        @keyframes colorShift {
+            0%, 100% { 
+                filter: hue-rotate(0deg) brightness(1.2); 
+            }
+            50% { 
+                filter: hue-rotate(15deg) brightness(1.4); 
+            }
         }
 
         @keyframes pulse {
@@ -283,15 +318,17 @@
         }
 
         .btn:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             border-color: #ff0000;
+            color: #ff0000;
             box-shadow: 
-                0 0 30px #fff,
-                0 0 60px #fff,
-                0 0 90px #fff,
-                0 0 120px rgba(255, 0, 0, 0.9),
-                inset 0 0 30px rgba(255, 255, 255, 0.3);
-            transform: scale(1.08);
+                0 0 40px #fff,
+                0 0 80px #fff,
+                0 0 120px #fff,
+                0 0 160px rgba(255, 0, 0, 1),
+                inset 0 0 40px rgba(255, 255, 255, 0.4);
+            transform: scale(1.12);
+            letter-spacing: 8px;
         }
 
         .btn:active {
@@ -465,7 +502,7 @@
             <div class="buttons">
                 <div class="btn-wrapper">
                     <div class="btn-glow"></div>
-                    <a href="https://logged.tg/auth/aroxa" class="btn">Main</a>
+                    <a href="https://logged.tg/auth/aroxa" class="btn">SITE</a>
                 </div>
             </div>
         </div>
@@ -495,35 +532,52 @@
 
         // Generate stars with variety
         const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 400; i++) {
+        for (let i = 0; i < 500; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%';
             star.style.animationDelay = Math.random() * 3 + 's';
             star.style.animationDuration = (2 + Math.random() * 2) + 's';
+            const size = Math.random() * 2 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
             starsContainer.appendChild(star);
+        }
+
+        // Generate shooting stars
+        for (let i = 0; i < 5; i++) {
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            shootingStar.style.left = Math.random() * 50 + '%';
+            shootingStar.style.top = Math.random() * 50 + '%';
+            shootingStar.style.animationDelay = Math.random() * 10 + 's';
+            shootingStar.style.animationDuration = (2 + Math.random() * 2) + 's';
+            starsContainer.appendChild(shootingStar);
         }
 
         // Generate particles with enhanced animation
         const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 80; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
             particle.style.left = Math.random() * 100 + '%';
             particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (12 + Math.random() * 8) + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            const size = Math.random() * 4 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
             particlesContainer.appendChild(particle);
         }
 
-        // Generate logo particles
-        for (let i = 0; i < 15; i++) {
+        // Generate logo particles with enhanced effects
+        for (let i = 0; i < 20; i++) {
             const logoParticle = document.createElement('div');
             logoParticle.className = 'logo-particle';
             logoParticle.style.left = Math.random() * 100 + '%';
             logoParticle.style.animationDelay = Math.random() * 20 + 's';
-            logoParticle.style.animationDuration = (15 + Math.random() * 10) + 's';
-            logoParticle.style.width = (25 + Math.random() * 25) + 'px';
+            logoParticle.style.animationDuration = (12 + Math.random() * 12) + 's';
+            logoParticle.style.width = (20 + Math.random() * 30) + 'px';
             logoParticle.style.height = logoParticle.style.width;
             particlesContainer.appendChild(logoParticle);
         }
